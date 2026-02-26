@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaik Mohammed Hafizulla | Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(120deg, #050505 0%, #0d2d21 45%, #0a1f32 100%);
+            --accent-green: #2ecc71;
+            --accent-blue: #3498db;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --base-font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-size: var(--base-font-size);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- RE-ACTIVATED ANIMATIONS --- */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(40px); 
+            transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1); 
+            will-change: transform, opacity;
+        }
+        
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 75px;
+            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(20px);
+            z-index: 1000; border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; height: 100%; padding: 0 5%;
+        }
+
+        .logo {
+            font-weight: 800; font-size: 1.4rem;
+            background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none; font-size: 0.85rem;
+            font-weight: 600; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .nav-links a:hover { color: var(--accent-green); }
+
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1001; }
+        .menu-toggle span { width: 30px; height: 3px; background: var(--text-main); border-radius: 2px; }
+        #nav-check { display: none; }
+
+        /* --- COMPONENT STYLES --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        section { padding: 100px 0; }
+
+        .card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 35px; backdrop-filter: blur(12px);
+            transition: 0.4s ease; height: 100%;
+        }
+
+        .card:hover { border-color: var(--accent-blue); transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+
+        #home { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+
+        h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 40px; display: flex; align-items: center; gap: 20px; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--glass-border); }
+
+        .project-category { margin-bottom: 50px; }
+        .category-title { color: var(--accent-blue); font-size: 1.1rem; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 2px; }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+
+        .skill-item { 
+            padding: 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid var(--glass-border); text-align: center; font-weight: 600; transition: 0.3s;
+        }
+        .skill-item:hover { background: var(--accent-green); color: #000; transform: scale(1.05); }
+
+        .edu-item { margin-bottom: 25px; padding-left: 20px; border-left: 2px solid var(--accent-green); transition: 0.3s; }
+        .edu-item:hover { border-left-color: var(--accent-blue); padding-left: 25px; }
+
+        .btn { padding: 12px 25px; border-radius: 30px; text-decoration: none; font-weight: 700; transition: 0.3s; display: inline-block; border: none; }
+        .btn-green { background: var(--accent-green); color: #000; }
+        .btn-outline { border: 1px solid var(--accent-blue); color: #fff; }
+
+        @media (max-width: 992px) {
+            .menu-toggle { display: flex; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 75%; height: 100vh;
+                background: rgba(5, 5, 5, 0.98); flex-direction: column; justify-content: center; align-items: center; transition: 0.4s;
+            }
+            #nav-check:checked ~ .nav-links { right: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">HAFIZULLA</div>
+            <input type="checkbox" id="nav-check">
+            <label for="nav-check" class="menu-toggle"><span></span><span></span><span></span></label>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="home">
+            <span style="color: var(--accent-green); letter-spacing: 3px; font-weight: 600;">SHAIK MOHAMMED HAFIZULLA</span>
+            <h1 class="hero-title">Frontend - Web <br><span style="color: var(--accent-blue);">Developer</span></h1>
+            <p style="color: var(--text-dim); max-width: 650px;">Engineering graduate passionate about crafting premium, responsive web interfaces with pixel-perfect accuracy and high performance.</p>
+            <div style="margin-top: 35px; display: flex; gap: 15px;">
+                <a href="https://github.com/Hafizulla777" class="btn btn-green">GitHub</a>
+                <a href="https://www.linkedin.com/in/shaik-hafizulla-web" class="btn btn-outline">LinkedIn</a>
+            </div>
+        </section>
+
+        <section id="about" class="reveal">
+            <h2>About Me</h2>
+            <div class="card">
+                <p>I am Shaik Mohammed Hafizulla, a motivated Frontend Developer and ECE graduate from Universal College of Engineering and Technology (JNTU). 
+                I specialize in turning complex UI designs into functional, high-performance web applications using HTML5, CSS3, and JavaScript. 
+                With a strong background in engineering, I approach web development with a focus on logical structure and responsiveness. 
+                My goal is to deliver clean, professional digital experiences that provide seamless user interactions across all devices. 
+                I am constantly learning new technologies to stay at the forefront of modern frontend standards.</p>
+            </div>
+        </section>
+
+        <section id="projects" class="reveal">
+            <h2>Projects</h2>
+            
+            <div class="project-category">
+                <h3 class="category-title">Personal Projects</h3>
+                <div class="project-grid">
+                    <div class="card">
+                        <h3 style="color: var(--accent-blue); margin-bottom: 10px;">Tic Tac Toe Web App</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 20px;">Implemented core game logic including turn-based switching, win validation, and draw detection using JavaScript.</p>
+                        <a href="https://hafizulla777.github.io/TIC-TAC-TOE/" style="color: var(--accent-green); text-decoration: none; font-weight: 600;">Live Demo →</a>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent-blue); margin-bottom: 10px;">E-Commerce Website</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 20px;">Built a responsive shopping layout using HTML and CSS Flexbox/Grid with a mobile-friendly navigation bar.</p>
+                        <a href="https://hafizulla777.github.io/easyshop/" style="color: var(--accent-green); text-decoration: none; font-weight: 600;">Live Demo →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-category">
+                <h3 class="category-title">Academic Projects</h3>
+                <div class="project-grid">
+                    <div class="card">
+                        <h3 style="color: var(--accent-blue); margin-bottom: 10px;">Coal Mine Safety Monitoring</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 15px;">Developed an embedded system using ZigBee to monitor gas concentration and temperature in hazardous mines.</p>
+                        <ul style="font-size: 0.85rem; color: var(--text-dim); padding-left: 18px;">
+                            <li>Used sensors for hazard detection.</li>
+                            <li>Implemented wireless data transmission.</li>
+                            <li>Aimed at improving safety via early warnings.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="reveal">
+            <h2>Skills</h2>
+            <div style="margin-bottom: 30px;">
+                <h3 class="category-title">Technical Stack</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;">
+                    <div class="skill-item">HTML5 / CSS3</div>
+                    <div class="skill-item">JavaScript</div>
+                    <div class="skill-item">Flexbox & Grid</div>
+                    <div class="skill-item">Python</div>
+                    <div class="skill-item">Figma</div>
+                    <div class="skill-item">GitHub</div>
+                </div>
+            </div>
+            <div>
+                <h3 class="category-title">Soft Skills</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;">
+                    <div class="skill-item">Communication</div>
+                    <div class="skill-item">Teamwork</div>
+                    <div class="skill-item">Continuous Learning</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="reveal">
+            <h2>Education</h2>
+            <div class="card">
+                <div class="edu-item">
+                    <h4>Bachelor of Engineering (ECE) | 7.2 CGPA</h4>
+                    <p style="color: var(--accent-blue);">Universal College of Eng & Tech | 2021-2025</p>
+                </div>
+                <div class="edu-item">
+                    <h4>Intermediate (MPC) | 8.0 CGPA</h4>
+                    <p style="color: var(--accent-blue);">Bhavana Jr College | 2019-2021</p>
+                </div>
+                <div class="edu-item">
+                    <h4>SSC (High School) | 7.8 CGPA</h4>
+                    <p style="color: var(--accent-blue);">ZP High School | 2018-2019</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="hobbies" class="reveal">
+            <h2>Hobbies</h2>
+            <div class="card" style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; text-align: center;">
+                <div><p style="font-size: 2rem;">♟️</p><strong>Chess</strong></div>
+                <div><p style="font-size: 2rem;">📺</p><strong>Anime</strong></div>
+                <div><p style="font-size: 2rem;">💻</p><strong>Coding</strong></div>
+                <div><p style="font-size: 2rem;">🏋️</p><strong>Fitness</strong></div>
+            </div>
+        </section>
+
+        <section id="contact" class="reveal">
+            <h2>Contact Me</h2>
+            <div class="card" style="text-align: center;">
+                <p>Email: <strong>hafizullas58@gmail.com</strong></p>
+                <p>Phone: +91 9100527275</p>
+                <div style="margin-top: 25px;"><a href="mailto:hafizullas58@gmail.com" class="btn btn-green">Send Email</a></div>
+            </div>
+        </section>
+
+        <footer style="padding: 40px 0; text-align: center; color: var(--text-dim); border-top: 1px solid var(--glass-border);">
+            <p>© 2026 Shaik Mohammed Hafizulla. Professional Developer Portfolio.</p>
+        </footer>
+    </div>
+
+    <script>
+        const observerOptions = {
+            root: null,
+            threshold: 0.1,
+            rootMargin: "0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
